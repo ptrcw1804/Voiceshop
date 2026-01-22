@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>VoiceShop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+
+<div class="app">
+    <h1>VoiceShop</h1>
+    <p class="subtitle">ระบบตอบคำถามอัตโนมัติด้วยเสียง</p>
+
+    <div class="lang-switch">
+        <button onclick="setLang('th')">TH</button>
+        <button onclick="setLang('en')">EN</button>
+    </div>
+
+    <div class="buttons">
+        <button onclick="answer('price')">ราคาสินค้า</button>
+        <button onclick="answer('time')">เวลาเปิดร้าน</button>
+        <button onclick="answer('order')">วิธีสั่งซื้อ</button>
+        <button onclick="answer('contact')">ช่องทางติดต่อ</button>
+    </div>
+
+    <div id="answerBox"></div>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
