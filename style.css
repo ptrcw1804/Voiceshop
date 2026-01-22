@@ -64,3 +64,9 @@ h1 {
     font-size: 18px;
     min-height: 60px;
 }
+
+.warning {
+    margin-top: 10px;
+    color: #a65c2a;
+    font-size: 14px;
+}

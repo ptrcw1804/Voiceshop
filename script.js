@@ -56,18 +56,28 @@ function setLang(lang) {
 
 function answer(key) {
     const text = data[currentLang].answers[key];
-
-    // แสดงข้อความ
     document.getElementById("answerText").innerText = text;
 
-    // พูดเสียง
-    const speech = new SpeechSynthesisUtterance(text);
-    speech.lang = currentLang === "th" ? "th-TH" : "en-US";
-    window.speechSynthesis.cancel();
-    window.speechSynthesis.speak(speech);
+    const warning = document.getElementById("voiceWarning");
+    warning.style.display = "none";
+
+    if ('speechSynthesis' in window) {
+        const speech = new SpeechSynthesisUtterance(text);
+        speech.lang = currentLang === "th" ? "th-TH" : "en-US";
+
+        // ตรวจสอบเสียงภาษาไทยบน Android
+        const voices = window.speechSynthesis.getVoices();
+        const hasThaiVoice = voices.some(v => v.lang === "th-TH");
+
+        if (currentLang === "th" && !hasThaiVoice) {
+            warning.style.display = "block";
+            return; // ไม่พยายามพูด
+        }
+
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(speech);
+    }
 }
 
 // ตั้งค่าเริ่มต้น
 setLang("th");
-
-// เปลี่ยน subtitle
