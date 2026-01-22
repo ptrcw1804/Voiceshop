@@ -2,43 +2,72 @@ let currentLang = "th";
 
 const data = {
     th: {
-        price: "ราคาสินค้าชิ้นละ 199 บาทค่ะ",
-        time: "ร้านเปิดทุกวันตั้งแต่ 9 โมงเช้าถึง 6 โมงเย็นค่ะ",
-        order: "สามารถสั่งซื้อได้ที่หน้าร้านหรือทางออนไลน์ค่ะ",
-        contact: "ติดต่อได้ทางไลน์หรือเบอร์โทรศัพท์ของร้านค่ะ"
+        subtitle: "กดเลือกคำถาม ระบบจะตอบด้วยเสียงอัตโนมัติ",
+        questions: {
+            price: "ราคาสินค้า",
+            time: "เวลาเปิดร้าน",
+            order: "วิธีสั่งซื้อ",
+            contact: "ช่องทางติดต่อ"
+        },
+        answers: {
+            price: "ราคาสินค้าเริ่มต้นที่ 30 บาท",
+            time: "ร้านเปิดทุกวัน เวลา 08.00 ถึง 18.00 น.",
+            order: "สามารถสั่งซื้อได้ที่หน้าร้าน",
+            contact: "ติดต่อได้ที่ร้านโกโก้ลุงลี"
+        }
     },
     en: {
-        price: "The price is 199 baht per item.",
-        time: "The shop is open from 9 a.m. to 6 p.m.",
-        order: "You can order at the shop or online.",
-        contact: "You can contact us via Line or phone."
+        subtitle: "Tap a question. The system will answer with voice.",
+        questions: {
+            price: "Price",
+            time: "Opening Hours",
+            order: "How to Order",
+            contact: "Contact"
+        },
+        answers: {
+            price: "Prices start at 30 baht.",
+            time: "The shop is open daily from 8 AM to 6 PM.",
+            order: "You can order at the shop.",
+            contact: "Contact Uncle Lee Cocoa shop."
+        }
     }
 };
 
-// เปลี่ยนภาษา
 function setLang(lang) {
     currentLang = lang;
+
+    // เปลี่ยนสีปุ่มภาษา
+    document.getElementById("btn-th").classList.remove("active");
+    document.getElementById("btn-en").classList.remove("active");
+    document.getElementById("btn-" + lang).classList.add("active");
+
+    document.getElementById("subtitle").innerText = data[lang].subtitle;
+
+    // เปลี่ยนข้อความปุ่มคำถาม
+    document.getElementById("q-price").innerText = data[lang].questions.price;
+    document.getElementById("q-time").innerText = data[lang].questions.time;
+    document.getElementById("q-order").innerText = data[lang].questions.order;
+    document.getElementById("q-contact").innerText = data[lang].questions.contact;
+
+    // รีเซ็ตกล่องคำตอบ
+    document.getElementById("answerText").innerText =
+        lang === "th" ? "กรุณาเลือกคำถาม" : "Please select a question";
 }
 
-// ตอบคำถาม + พูดออกเสียง
 function answer(key) {
-    const text = data[currentLang][key];
-    document.getElementById("answerBox").innerText = text;
+    const text = data[currentLang].answers[key];
 
-    // สร้างเสียงพูด
+    // แสดงข้อความ
+    document.getElementById("answerText").innerText = text;
+
+    // พูดเสียง
     const speech = new SpeechSynthesisUtterance(text);
-
-    // ⭐ จุดสำคัญที่สุด: กำหนดภาษาให้ชัด
-    if (currentLang === "th") {
-        speech.lang = "th-TH";
-    } else {
-        speech.lang = "en-US";
-    }
-
-    speech.rate = 1;   // ความเร็วปกติ
-    speech.pitch = 1;  // น้ำเสียงปกติ
-
-    // หยุดเสียงเก่าก่อน (กันเสียงซ้อน)
+    speech.lang = currentLang === "th" ? "th-TH" : "en-US";
     window.speechSynthesis.cancel();
     window.speechSynthesis.speak(speech);
 }
+
+// ตั้งค่าเริ่มต้น
+setLang("th");
+
+// เปลี่ยน subtitle

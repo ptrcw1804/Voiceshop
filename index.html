@@ -5,27 +5,34 @@
     <title>VoiceShop</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="manifest.json">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+
 </head>
 <body>
 
 <div class="app">
-    <h1>VoiceShop</h1>
-    <p class="subtitle">ระบบตอบคำถามอัตโนมัติด้วยเสียง</p>
+    <h1>VoiceShop 🍫</h1>
+    <p class="subtitle" id="subtitle">
+    ระบบตอบคำถามอัตโนมัติด้วยเสียง
+</p>
 
     <div class="lang-switch">
-        <button onclick="setLang('th')">TH</button>
-        <button onclick="setLang('en')">EN</button>
-    </div>
+    <button id="btn-th" onclick="setLang('th')">TH</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+</div>
 
-    <div class="buttons">
-        <button onclick="answer('price')">ราคาสินค้า</button>
-        <button onclick="answer('time')">เวลาเปิดร้าน</button>
-        <button onclick="answer('order')">วิธีสั่งซื้อ</button>
-        <button onclick="answer('contact')">ช่องทางติดต่อ</button>
-    </div>
+<div class="buttons">
+    <button id="q-price" onclick="answer('price')"></button>
+    <button id="q-time" onclick="answer('time')"></button>
+    <button id="q-order" onclick="answer('order')"></button>
+    <button id="q-contact" onclick="answer('contact')"></button>
+</div>
 
-    <div id="answerBox"></div>
+<div id="answerBox">
+    <p id="answerText">กรุณาเลือกคำถาม</p>
+</div>
+
 </div>
 
 <script src="script.js"></script>

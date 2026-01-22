@@ -1,50 +1,66 @@
 body {
-    margin: 0;
-    font-family: sans-serif;
-    background: #f2f2f2;
+    font-family: 'Prompt', sans-serif;
+    background-color: #f5efe6;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
 }
 
 .app {
-    max-width: 420px;
-    margin: auto;
-    background: white;
-    min-height: 100vh;
+    background: #ffffff;
     padding: 20px;
+    border-radius: 15px;
+    max-width: 400px;
+    width: 100%;
     text-align: center;
 }
 
 h1 {
-    margin-top: 10px;
+    color: #5a3e2b;
 }
 
 .subtitle {
-    font-size: 14px;
-    color: #666;
+    color: #777;
+    margin-bottom: 15px;
 }
 
 .lang-switch button {
     margin: 5px;
-    padding: 8px 15px;
+    padding: 6px 14px;
+    border-radius: 8px;
     border: none;
-    border-radius: 20px;
-    background: #ddd;
+    background-color: #ddd;
     cursor: pointer;
+    font-weight: bold;
+}
+
+.lang-switch button.active {
+    background-color: #8b5e3c;
+    color: white;
 }
 
 .buttons button {
+    font-family: 'Kanit', sans-serif;
     width: 100%;
-    padding: 16px;
-    margin: 10px 0;
-    font-size: 16px;
-    border-radius: 12px;
+    margin: 6px 0;
+    padding: 12px;
+    border-radius: 10px;
     border: none;
-    background: #4CAF50;
+    background-color: #8b5e3c;
     color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: #6f4528;
 }
 
 #answerBox {
     margin-top: 20px;
     padding: 15px;
-    background: #f9f9f9;
     border-radius: 10px;
+    background-color: #f0e0d0;
+    font-size: 18px;
+    min-height: 60px;
 }
