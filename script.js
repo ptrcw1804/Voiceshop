@@ -12,7 +12,7 @@ const data = {
         answers: {
             price: "ราคาสินค้าเริ่มต้นที่ 30 บาท",
             time: "ร้านเปิดทุกวัน เวลา 08.00 ถึง 18.00 น.",
-            order: "สามารถสั่งซื้อได้ที่หน้าร้านหรือเพจเฟสบุ๊ค",
+            order: "สามารถสั่งซื้อได้ที่หน้าร้านหรือช่องทางออนไลน์",
             contact: "ติดต่อได้ที่เพจเฟสบุ๊ค หรือโทร 064-234-5678"
         }
     },
@@ -27,7 +27,7 @@ const data = {
         answers: {
             price: "Prices start at 30 baht.",
             time: "The shop is open daily from 8 AM to 6 PM.",
-            order: "You can order at the shop or via Facebook.",
+            order: "Orders can be placed in-store or online.",
             contact: "Contact us via Facebook or call 064-234-5678."
         }
     }
@@ -52,6 +52,18 @@ function setLang(lang) {
     // รีเซ็ตกล่องคำตอบ
     document.getElementById("answerText").innerText =
         lang === "th" ? "กรุณาเลือกคำถาม" : "Please select a question";
+
+    document.getElementById("answerBox").classList.add("show");
+
+    document.getElementById("btn-th").classList.remove("active");
+document.getElementById("btn-en").classList.remove("active");
+
+if(lang === 'th'){
+    document.getElementById("btn-th").classList.add("active");
+}else{
+    document.getElementById("btn-en").classList.add("active");
+}
+
 }
 
 function answer(key) {

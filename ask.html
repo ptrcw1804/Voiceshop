@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <title>VoiceShop</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600&family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+    body {
+    margin: 0;
+    font-family: 'Prompt', sans-serif;
+    background: linear-gradient(to bottom, #f6f1e7, #efe6d8);
+}
+
+.app {
+    max-width: 550px;
+    margin: auto;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+h1 {
+    font-family: 'Kanit', sans-serif;
+    color: #5c4033;
+    margin-bottom: 5px;
+}
+
+.small {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.subtitle {
+    color: #8b6f5c;
+    margin-bottom: 20px;
+}
+
+/* ปุ่มภาษา */
+.lang-switch button {
+    background-color: #e6d5c3;
+    border: none;
+    padding: 6px 18px;
+    margin: 5px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: 0.3s;
+}
+
+.lang-switch button.active {
+    background-color: #6f4e37;
+    color: white;
+}
+
+.lang-switch button:hover {
+    background-color: #d2bba3;
+}
+
+/* ปุ่มคำถาม */
+.buttons {
+    margin-top: 20px;
+    display: grid;
+    gap: 12px;
+}
+
+.buttons button {
+    padding: 15px;
+    border: none;
+    border-radius: 18px;
+    background-color: #6f4e37;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+}
+
+.buttons button:hover {
+    background-color: #8b5e3c;
+    transform: translateY(-3px);
+}
+
+/* 2 คอลัมน์บนจอใหญ่ */
+@media (min-width: 600px) {
+    .buttons {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+/* กล่องคำตอบ */
+#answerBox {
+    margin-top: 25px;
+    padding: 20px;
+    background-color: #fffaf3;
+    border-radius: 18px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+    color: #5c4033;
+    min-height: 60px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s ease;
+}
+
+#answerBox.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* แจ้งเตือน */
+.warning {
+    color: #a94442;
+    font-size: 14px;
+    margin-top: 15px;
+}
+
+/* ปุ่มกลับ */
+.back-section {
+    margin-top: 30px;
+}
+
+.back-btn {
+    display: inline-block;
+    padding: 10px 22px;
+    background-color: #6e5944;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: 0.3s;
+}
+
+.back-btn:hover {
+    background-color: #a68a75;
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+    <h1>☕ VoiceShop<br><span class="small">สำหรับร้านค้า</span></h1>
+    <p class="subtitle" id="subtitle">
+    ระบบตอบคำถามอัตโนมัติด้วยเสียง
+</p>
+
+    <div class="lang-switch">
+    <button id="btn-th" class="active" onclick="setLang('th')">TH</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+</div>
+
+<div class="buttons">
+    <button id="q-price" onclick="answer('price')"></button>
+    <button id="q-time" onclick="answer('time')"></button>
+    <button id="q-order" onclick="answer('order')"></button>
+    <button id="q-contact" onclick="answer('contact')"></button>
+</div>
+
+<div id="answerBox">
+    <p id="answerText">กรุณาเลือกคำถาม</p>
+</div>
+
+<p id="voiceWarning" class="warning" style="display:none;">
+    ⚠️ อุปกรณ์นี้อาจไม่รองรับเสียงภาษาไทย แสดงเฉพาะข้อความ
+</p>
+
+<div class="back-section">
+    <a href="menu.html" class="back-btn">← กลับไปหน้าเมนู</a>
+</div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
