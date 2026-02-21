@@ -3,85 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aroma Café</title>
+<title>Hill Tribe Cocoa Cof</title>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
 
+
 <style>
-body {
-  margin: 0;
-  font-family: 'Kanit', sans-serif;
-  background-color: #f6f1eb;
-  color: #4b3832;
+body{
+margin:0;
+font-family:'Kanit',sans-serif;
+background:#f6f1eb;
+color:#4b3832;
 }
 
-header {
-  background-color: #6f4e37;
-  color: white;
-  padding: 20px;
-  text-align: center;
+header{
+background:#6f4e37;
+color:white;
+text-align:center;
+padding:1px;
 }
 
-.lang-btn, .cat-btn {
-  font-family: 'Kanit', sans-serif;
-  padding: 6px 14px;
-  margin: 5px;
-  border: none;
-  border-radius: 20px;
-  cursor: pointer;
-  background-color: #d9c2ad;
-  color: #4b3832;
+.logo{
+width:100px;
+height:100px;
+object-fit:cover;
+border-radius:50%;
+border:4px solid white;
+margin-top:20px;
+margin-bottom:1px;
 }
 
-.active {
-  background-color: white;
-  font-weight: bold;
+.top-bar{
+text-align:center;
+margin:20px 0;
 }
 
-.category-bar {
-  text-align: center;
-  margin: 15px 0;
+select,button{
+padding:8px 15px;
+border-radius:20px;
+border:none;
+margin:5px;
+font-family:'Kanit',sans-serif;
+background:#d9c2ad;
+cursor:pointer;
 }
 
-.menu-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  padding: 20px;
+.active{
+background:white;
+font-weight:bold;
 }
 
-.menu-item {
-  background: white;
-  border-radius: 15px;
-  padding: 15px;
-  text-align: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
-  cursor: pointer;
-  transition: 0.3s;
+/* ⭐ แก้ layout ใหม่ให้สวยและกลางเสมอ */
+.menu-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,220px);
+justify-content:center;
+gap:40px;
+padding:40px;
 }
 
-.menu-item:hover {
-  transform: scale(1.03);
+.menu-item{
+width:220px;
+background:white;
+border-radius:15px;
+padding:15px;
+text-align:center;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+transition:0.3s;
 }
 
-.menu-item img {
-  width: 100%;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 10px;
+.menu-item:hover{
+transform:scale(1.05);
 }
 
-.price {
-  color: #8b5e3c;
-  font-weight: bold;
+.menu-item img{
+width:100%;
+height:250px;
+object-fit:cover;
+border-radius:10px;
 }
 
-.detail-box {
-  background: white;
-  margin: 20px;
-  padding: 20px;
-  border-radius: 15px;
-  min-height: 80px;
-  text-align: center;
+.price{
+color:#8b5e3c;
+font-weight:bold;
+}
+
+.detail-box{
+background:white;
+margin:20px auto;
+padding:25px;
+border-radius:15px;
+text-align:center;
+max-width:600px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.speak-btn{
+background:#8b5e3c;
+color:white;
+margin-top:10px;
+}
+
+.detail-box h3{
+color:#8b5e3c;
+margin-bottom:5px;
+}
+
+/* ⭐ Modal Popup */
+.modal{
+display:none;
+position:fixed;
+z-index:1000;
+left:0;
+top:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,0.5);
+justify-content:center;
+align-items:center;
+}
+
+.modal-content{
+background:white;
+width:90%;
+max-width:600px;
+padding:30px;
+border-radius:15px;
+box-shadow:0 10px 25px rgba(0,0,0,0.2);
+max-height:80vh;
+overflow-y:auto;
+position:relative;
+}
+
+.close-btn{
+position:absolute;
+top:10px;
+right:15px;
+font-size:20px;
+cursor:pointer;
+color:#8b5e3c;
 }
 
 .ask-section {
@@ -105,128 +164,289 @@ header {
   background-color: #8b5e3c;
   transform: scale(1.05);
 }
-
-h1{
-  font-size: 40px;
-}
 </style>
 </head>
 
 <body>
 
 <header>
-  <h1>☕ Aroma Café</h1>
-  <button class="lang-btn active" onclick="setLanguage('th', event)">ไทย</button>
-  <button class="lang-btn" onclick="setLanguage('en', event)">English</button>
+<img src="cocoa_doi_logo.jpg" class="logo">
+<h1>Hill Tribe Cocoa Cof</h1>
+<p id="tagline">โกโก้แท้จากคนดอย</p>
 </header>
 
-<div class="category-bar">
-  <button class="cat-btn active" onclick="setCategory('drinks', event)">Drinks</button>
-  <button class="cat-btn" onclick="setCategory('bakery', event)">Bakery</button>
+<div class="top-bar">
+<button class="active" onclick="setLanguage('th',event)">ไทย</button>
+<button onclick="setLanguage('en',event)">English</button>
+
+<select id="productSelect" onchange="setFilter(this.value)">
+</select>
 </div>
 
 <div class="menu-container" id="menu"></div>
 
-<div class="detail-box" id="detail">
-  กรุณาเลือกเมนู
-</div>
+
 
 <script>
-let currentLang = "th";
-let currentCategory = "drinks";
+let currentLang="th";
+let currentFilter="all";
+let currentSpeechText="";
 
-const menuData = [
-  {category:"drinks", img:"https://doithaicoffee.com/wp-content/uploads/2022/04/cup-of-latte-art.jpg",
-    th:{name:"ลาเต้",price:"65 บาท",desc:"กาแฟผสมนมสด หอมละมุน"},
-    en:{name:"Latte",price:"65 THB",desc:"Smooth coffee with milk."}},
+const menuData=[
 
-  {category:"drinks", img:"https://www.nespresso.com/ecom/medias/sys_master/public/45936680796190/shutterstock-1074209732-1024x683.jpg",
-  th: { name: "คาปูชิโน่", price: "70 บาท", desc: "กาแฟเข้มข้น พร้อมฟองนมนุ่มละมุน" },
-    en: { name: "Cappuccino", price: "70 THB", desc: "Strong coffee topped with creamy milk foam." }},
-      
-  {category:"drinks", img:"https://media.istockphoto.com/id/1371303553/photo/coffee-and-chocolate-cocktail-with-whipped-cream.jpg?s=612x612&w=0&k=20&c=O3ZIVpWd6ADADg0ELcjkqD1qkWPJsvKE4AU_yoLdm5Y=",
-    th:{name:"มอคค่า",price:"75 บาท",desc:"กาแฟผสมช็อกโกแลตเข้มข้น"},
-    en:{name:"Mocha",price:"75 THB",desc:"Espresso with rich chocolate."}},
-    
-  {category:"drinks", img:"https://images.unsplash.com/photo-1553530666-ba11a7da3888",
-    th:{name:"สตรอว์เบอร์รี่สมูทตี้",price:"80 บาท",desc:"สมูทตี้ผลไม้สด สดชื่น"},
-    en:{name:"Strawberry Smoothie",price:"80 THB",desc:"Fresh strawberry smoothie."}},
+{filter:"raw",img:"cacao_pod.jpg",
+th:{name:"ผลโกโก้สด",price:"8-10 บาท/กิโลกรัม",desc:"ผลสดจากสวนบนดอย"},
+en:{name:"Fresh Cacao Pod",price:"8-10 Baht/Kilogram",desc:"Fresh cacao pod from mountain farm."}},
 
-  {category:"drinks", img:"https://image.makewebeasy.net/makeweb/m_1920x0/W7OuxZEpB/DefaultData/%E0%B8%8A%E0%B8%B2%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%A7%E0%B8%B1%E0%B8%95%E0%B8%96%E0%B8%B8%E0%B8%94%E0%B8%B4%E0%B8%9A_09.jpg?v=202405291424",
-    th: { name: "ชาไทยเย็น", price: "60 บาท", desc: "ชาไทยหอมหวาน เสิร์ฟเย็นสดชื่น" },
-  en: { name: "Thai Iced Tea", price: "60 THB", desc: "Sweet and creamy Thai tea served over ice." }},
+{filter:"raw",img:"cacao_beans_raw.jpg",
+th:{name:"เมล็ดคาเคา แบบดิบ",price:"100 บาท (100กรัม)",desc:"เมล็ดโกโก้จากสวนบนดอย"},
+en:{name:"Cacao Beans",price:"100 Baht (100 gram)",desc:"Raw cacao beans from mountain farm."}},
 
-  
+{filter:"raw",img:"cacao_beans_roasted.jpg",
+th:{name:"เมล็ดคาเคา แบบคั่ว",price:"100 บาท (100กรัม)",desc:"เมล็ดโกโก้คั่วจากสวนบนดอย"},
+en:{name:"Cacao Beans",price:"100 Baht (100 gram)",desc:"Roasted cacao beans from mountain farm."}},
 
-  {category:"bakery", img:"https://media.istockphoto.com/id/1456338180/th/%E0%B8%A3%E0%B8%B9%E0%B8%9B%E0%B8%96%E0%B9%88%E0%B8%B2%E0%B8%A2/%E0%B8%AD%E0%B8%B2%E0%B8%AB%E0%B8%B2%E0%B8%A3%E0%B9%80%E0%B8%8A%E0%B9%89%E0%B8%B2%E0%B8%AB%E0%B8%A7%E0%B8%B2%E0%B8%99%E0%B8%8A%E0%B8%B2%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%8A%E0%B8%B5%E0%B8%AA%E0%B9%80%E0%B8%84%E0%B9%89%E0%B8%81%E0%B9%81%E0%B8%AA%E0%B8%99%E0%B8%AD%E0%B8%A3%E0%B9%88%E0%B8%AD%E0%B8%A2%E0%B8%81%E0%B8%B1%E0%B8%9A%E0%B8%AA%E0%B8%95%E0%B8%A3%E0%B8%AD%E0%B9%80%E0%B8%9A%E0%B8%AD%E0%B8%A3%E0%B9%8C%E0%B8%A3%E0%B8%B5%E0%B9%88%E0%B8%AA%E0%B8%94%E0%B9%81%E0%B8%A5%E0%B8%B0%E0%B8%AA%E0%B8%B0%E0%B8%A3%E0%B8%B0%E0%B9%81%E0%B8%AB%E0%B8%99%E0%B9%88%E0%B8%AA%E0%B8%B9%E0%B8%95%E0%B8%A3%E0%B9%82%E0%B8%AE%E0%B8%A1%E0%B9%80%E0%B8%A1%E0%B8%94%E0%B9%82%E0%B8%94%E0%B8%A2%E0%B9%84%E0%B8%A1%E0%B9%88%E0%B8%95%E0%B9%89%E0%B8%AD%E0%B8%87%E0%B8%AD%E0%B8%9A%E0%B8%9A%E0%B8%99.jpg?s=612x612&w=0&k=20&c=u4xUObKCLg0p1zbmPcMCOPVqZsFhPaqyYpS2yPi89Kc=",
-    th:{name:"ชีสเค้ก",price:"85 บาท",desc:"ชีสเค้กเนื้อนุ่ม หวานกำลังดี"},
-    en:{name:"Cheesecake",price:"85 THB",desc:"Soft and creamy cheesecake."}},
-    
-  {category:"bakery", img:"https://assets.flowerstore.ph/public/tenantTH/app/assets/images/meta/300_cyDKZ1gFHSU03mmljvV5VQGMc.webp",
-    th:{name:"เค้กช็อกโกแลต",price:"90 บาท",desc:"เค้กช็อกโกแลตเข้มข้น"},
-    en:{name:"Chocolate Cake",price:"90 THB",desc:"Rich chocolate cake."}},
-    
-  {category:"bakery", img:"https://th-images.th-hellomagazine.com/wp-content/uploads/2023/02/17124934/%E0%B8%AE%E0%B8%B1%E0%B8%99%E0%B8%99%E0%B8%B5%E0%B9%82%E0%B8%97%E0%B8%AA%E0%B8%95%E0%B9%8C_f.jpg?tr=w-1200,h-900",
-    th:{name:"ฮันนี่โทสต์",price:"120 บาท",desc:"ขนมปังอบกรอบ เสิร์ฟพร้อมไอศกรีม"},
-    en:{name:"Honey Toast",price:"120 THB",desc:"Toasted bread with ice cream."}},
+{filter:"raw",img:"cacao_powder.jpg",
+th:{name:"ผงโกโก้",price:"? บาท",desc:""},
+en:{name:"Cacao Powder",price:"? Baht",desc:""}},
 
-  {category:"bakery", img: "https://png.pngtree.com/background/20230616/original/pngtree-brownies-a-classic-chocolate-dessert-picture-image_3623891.jpg",
-    th: { name: "บราวนี่", price: "50 บาท", desc: "บราวนี่เข้มข้น หอมช็อกโกแลตแท้" },
-    en: { name: "Brownie", price: "50 THB", desc: "Rich chocolate brownie with intense flavor." }},
+{filter:"raw",img:"cocoa_butter.jpg",
+th:{name:"เนยโกโก้",price:"? บาท",desc:""},
+en:{name:"Cocoa Butter",price:"? Baht",desc:""}},
 
-  {category:"bakery", img: "https://www.silpa-mag.com/wp-content/uploads/2024/07/bread-1284438_1280.jpg",
-  th: { name: "ครัวซองต์", price: "55 บาท", desc: "ครัวซองต์อบใหม่ กรอบนอกนุ่มใน" },
-  en: { name: "Croissant", price: "55 THB", desc: "Freshly baked croissant, crispy outside and soft inside." }}
+{filter:"raw",img:"cacao_mass.jpg",
+th:{name:"โกโก้แมส",price:"300 บาท (250กรัม)",desc:""},
+en:{name:"Cacao Mass",price:"300 Baht (250 gram)",desc:""}},
+
+{filter:"nibs",img:"cocoa_nibs.jpg",
+th:{name:"โกโก้นิบส์",price:"? บาท",desc:""},
+en:{name:"Cacao Nibs",price:"? Baht",desc:""}},
+
+{filter:"drink",img:"cocoa_water.jpg",
+th:{name:"น้ำโกโก้สด",price:"80 บาท",desc:"เครื่องดื่มจากเยื่อโกโก้",how:"แช่เย็นก่อนดื่ม เขย่าก่อนเปิด",
+benefit:"สดชื่น มีวิตามินธรรมชาติ"},
+en:{name:"Fresh Cocoa Drink",price:"80 Baht",desc:"Refreshing cacao pulp drink.",how:"Shake well and serve chilled",
+benefit:"Naturally refreshing and rich in vitamins"}},
+
+{filter:"alcohol",img:"cocoa_wine.jpg",
+th:{name:"Cocoa Cider Wine",price:"250 บาท",desc:"ไวน์หมักจากเยื่อโกโก้"},
+en:{name:"Cocoa Cider Wine",price:"250 Baht",desc:"Fermented cacao pulp wine."}},
+
+{filter:"alcohol",img:"cocoa_whiskey.jpg",
+th:{name:"Cocoa Whiskey",price:"250 บาท",desc:""},
+en:{name:"Cocoa Whiskey",price:"250 Baht",desc:""}},
+
+{filter:"dark",img:"dark100.jpg",
+th:{name:"ดาร์กช็อกโกแลต 100%",price:"120 บาท",desc:""},
+en:{name:"Dark Chocolate 100%",price:"120 Baht",desc:""}},
+
+{filter:"dark",img:"dark90.jpg",
+th:{name:"ดาร์กช็อกโกแลต 90% <br>รสโมคค่า</br>",price:"120 บาท",desc:""},
+en:{name:"Dark Chocolate 90% Mocha Flavor",price:"120 Baht",desc:""}},
+
+{filter:"dark",img:"dark80.jpg",
+th:{name:"ดาร์กช็อกโกแลต 80%",price:"120 บาท",desc:""},
+en:{name:"Dark Chocolate 80%",price:"120 Baht",desc:""}},
+
+{filter:"dark",img:"dark_str80.jpg",
+th:{name:"ดาร์กช็อกโกแลต 80% <br>รสสตรอเบอรี่</br>",price:"120 บาท",desc:""},
+en:{name:"Dark Chocolate 80% Strawberry Flavor",price:"120 Baht",desc:""}},
+
+{filter:"dark",img:"dark_alm80.jpg",
+th:{name:"ดาร์กช็อกโกแลต 80% <br>รสอัลมอนด์</br>",price:"120 บาท",desc:""},
+en:{name:"Dark Chocolate 80% Almond Flavor",price:"120 Baht",desc:""}},
+
+{filter:"dark",img:"dark_.jpg",
+th:{name:"ดาร์กช็อกโกแลต 70% <br>เชียงใหม่ ออริจิน</br>",price:"120 บาท",desc:""},
+en:{name:"Dark Chocolate 70% Chiang Mai Origin",price:"120 Baht",desc:""}},
+
+{filter:"dark",img:"dark_gin70.jpg",
+th:{name:"ดาร์กช็อกโกแลต 70% <br>รสขิง</br>",price:"120 บาท",desc:""},
+en:{name:"Dark Chocolate 70% Ginger Flavor",price:"120 Baht",desc:""}},
+
+{filter:"dark",img:"dark_.jpg",
+th:{name:"ดาร์กช็อกโกแลต 70% <br>รสน้ำตาลดอกมะพร้าว</br>",price:"120 บาท",desc:""},
+en:{name:"Dark Chocolate 70% Coconut Blossom Sugar Flavor",price:"120 Baht",desc:""}},
+
+{filter:"dark",img:"dark_.jpg",
+th:{name:"ดาร์กช็อกโกแลต 60% <br>รสนม</br>",price:"120 บาท",desc:""},
+en:{name:"Dark Chocolate 60% Milk Flavor",price:"120 Baht",desc:""}},
+
+{filter:"white",img:"white_.jpg",
+th:{name:"ไวท์ช็อกโกแลต 34% <br>รสสตรอเบอรี่</br>",price:"120 บาท",desc:""},
+en:{name:"White Chocolate 34% Strawberry Flavor",price:"120 Baht",desc:""}},
+
+{filter:"white",img:"white_.jpg",
+th:{name:"ไวท์ช็อกโกแลต 34% <br>นมอัลมอนด์</br>",price:"120 บาท",desc:""},
+en:{name:"White Chocolate 34% Milk Almond Flavor",price:"120 Baht",desc:""}},
+
+{filter:"white",img:"white_mpe34.jpg",
+th:{name:"ไวท์ช็อกโกแลต 34% <br>รสนมพีช</br>",price:"120 บาท",desc:""},
+en:{name:"White Chocolate 34% Milk Peach Flavor",price:"120 Baht",desc:""}},
+
+{filter:"white",img:"white_.jpg",
+th:{name:"ไวท์ช็อกโกแลต 34% <br>รสนม</br>",price:"120 บาท",desc:""},
+en:{name:"White Chocolate 34% Milk Flavor",price:"120 Baht",desc:""}},
+
+{filter:"honey",img:"cocoa_honey.jpg",
+th:{name:"น้ำผึ้งป่าโกโก้",price:"250 บาท",desc:""},
+en:{name:"Honey Cocoa Garden",price:"250 Baht",desc:""}}
+
+
+
 ];
 
-function renderMenu() {
-  const menu = document.getElementById("menu");
-  menu.innerHTML = "";
+function renderDropdown(){
+const select=document.getElementById("productSelect");
 
-  menuData.filter(item => item.category === currentCategory)
-  .forEach(item => {
-    const data = item[currentLang];
-    menu.innerHTML += `
-      <div class="menu-item" onclick="showDetail('${data.name}','${data.price}','${data.desc}')">
-        <img src="${item.img}">
-        <h3>${data.name}</h3>
-        <p class="price">${data.price}</p>
-      </div>
-    `;
-  });
+if(currentLang==="th"){
+select.innerHTML=`
+<option value="all">-- เลือกหมวดสินค้า --</option>
+<optgroup label="วัตถุดิบ">
+<option value="raw">วัตถุดิบโกโก้</option>
+<option value="nibs">โกโก้นิบส์</option>
+</optgroup>
+<optgroup label="ผลิตภัณฑ์แปรรูป">
+<option value="drink">เครื่องดื่ม</option>
+<option value="alcohol">แอลกอฮอล์</option>
+<option value="honey">น้ำผึ้ง</option>
+</optgroup>
+<optgroup label="ช็อกโกแลต">
+<option value="dark">ดาร์กช็อกโกแลต</option>
+<option value="white">ไวท์ช็อกโกแลต</option>
+</optgroup>
+`;
+}else{
+select.innerHTML=`
+<option value="all">-- Select Product Category --</option>
+<optgroup label="Raw Materials">
+<option value="raw">Cacao Raw</option>
+<option value="nibs">Cocoa Nibs</option>
+</optgroup>
+<optgroup label="Processed Products">
+<option value="drink">Drinks</option>
+<option value="alcohol">Alcohol</option>
+<option value="honey">Honey</option>
+</optgroup>
+<optgroup label="Chocolate">
+<option value="dark">Dark Chocolate</option>
+<option value="white">White Chocolate</option>
+</optgroup>
+`;
 }
 
-function showDetail(name, price, desc) {
-  document.getElementById("detail").innerHTML =
-    `<h2>${name}</h2><p><strong>${price}</strong></p><p>${desc}</p>`;
-  
-  const speech = new SpeechSynthesisUtterance(`${name} ${price}. ${desc}`);
-  speech.lang = currentLang === "th" ? "th-TH" : "en-US";
-  window.speechSynthesis.cancel();
-  window.speechSynthesis.speak(speech);
+select.value=currentFilter;
 }
 
-function setLanguage(lang, event) {
-  currentLang = lang;
-  document.querySelectorAll(".lang-btn").forEach(btn => btn.classList.remove("active"));
-  event.target.classList.add("active");
-  renderMenu();
+function renderMenu(){
+const menu=document.getElementById("menu");
+menu.innerHTML="";
+
+menuData
+.filter(item=>currentFilter==="all"||item.filter===currentFilter)
+.forEach(item=>{
+const data=item[currentLang];
+menu.innerHTML+=`
+<div class="menu-item" onclick="showDetail('${data.name}','${data.price}','${data.desc}')">
+<img src="${item.img}">
+<h3>${data.name}</h3>
+<p class="price">${data.price}</p>
+</div>`;
+});
 }
 
-function setCategory(cat, event) {
-  currentCategory = cat;
-  document.querySelectorAll(".cat-btn").forEach(btn => btn.classList.remove("active"));
-  event.target.classList.add("active");
-  renderMenu();
-}
-
+function setFilter(value){
+currentFilter=value;
 renderMenu();
+}
+
+function showDetail(name,price,desc){
+
+const item = menuData.find(p =>
+p[currentLang].name === name
+);
+
+const data = item[currentLang];
+
+currentSpeechText = `
+${data.name}.
+${data.price}.
+${data.desc || ""}.
+${currentLang==="th"?"วิธีรับประทาน":"How to enjoy"}.
+${data.how || ""}.
+${currentLang==="th"?"ประโยชน์":"Benefits"}.
+${data.benefit || ""}
+`;
+
+document.getElementById("detail").innerHTML=
+`
+<span class="close-btn" onclick="closeModal()">✖</span>
+
+<h2>${data.name}</h2>
+<p><strong>${data.price}</strong></p>
+<p>${data.desc || ""}</p>
+
+<hr style="margin:15px 0;">
+
+<h3>${currentLang==="th"?"วิธีรับประทาน":"How to Enjoy"}</h3>
+<p>${data.how || "-"}</p>
+
+<h3>${currentLang==="th"?"ประโยชน์":"Benefits"}</h3>
+<p>${data.benefit || "-"}</p>
+
+<button class="speak-btn" onclick="speak()">
+🔊 ${currentLang==="th"?"ฟังเสียง":"Listen"}
+</button>
+`;
+
+document.getElementById("productModal").style.display="flex";
+}
+
+function speak(){
+if(!currentSpeechText) return;
+
+const speech = new SpeechSynthesisUtterance(currentSpeechText);
+speech.lang = currentLang==="th" ? "th-TH" : "en-US";
+
+window.speechSynthesis.cancel();
+window.speechSynthesis.speak(speech);
+}
+
+function closeModal(){
+document.getElementById("productModal").style.display="none";
+}
+
+function setLanguage(lang,event){
+currentLang=lang;
+currentFilter="all";
+
+document.querySelectorAll(".top-bar button")
+.forEach(btn=>btn.classList.remove("active"));
+
+event.target.classList.add("active");
+
+renderDropdown();
+renderMenu();
+}
+
+renderDropdown();
+renderMenu();
+
+
 </script>
+
+<div class="modal" id="productModal">
+<div class="modal-content" id="detail">
+<span class="close-btn" onclick="closeModal()">✖</span>
+</div>
+</div>
 
 <div class="ask-section">
   <a href="ask.html" class="ask-btn">💬 คำถามยอดฮิต
 </a>
 </div>
+
+<script src="script.js"></script>
 
 </body>
 </html>
