@@ -13,7 +13,7 @@ const data = {
             price: "ราคาสินค้าเริ่มต้นที่ 50 บาท",
             time: "ร้านเปิดทุกวัน เวลา 08.00 ถึง 18.00 น.",
             order: "สามารถสั่งซื้อได้ที่หน้าร้านหรือช่องทางออนไลน์",
-            contact: "ติดต่อได้ที่เพจเฟสบุ๊ค Hill Tribe Cocoa Cof หรือโทร 099-295-110"
+            contact: "ติดต่อได้ที่เพจเฟสบุ๊ค Hill Tribe Cocoa Cof <br>หรือโทร 099-295-110"
         }
     },
     en: {
@@ -28,7 +28,7 @@ const data = {
             price: "Prices start at 50 baht.",
             time: "The shop is open daily from 8 AM to 6 PM.",
             order: "Orders can be placed in-store or online.",
-            contact: "Contact us via Facebook Hill Tribe Cocoa Cof or call 099-295-110."
+            contact: "Contact us via Facebook Hill Tribe Cocoa Cof <br>or call 099-295-110."
         }
     }
 };
@@ -68,22 +68,21 @@ if(lang === 'th'){
 
 function answer(key) {
     const text = data[currentLang].answers[key];
-    document.getElementById("answerText").innerText = text;
+    document.getElementById("answerText").innerHTML = text; // ⭐ แก้ตรงนี้
 
     const warning = document.getElementById("voiceWarning");
     warning.style.display = "none";
 
     if ('speechSynthesis' in window) {
-        const speech = new SpeechSynthesisUtterance(text);
+        const speech = new SpeechSynthesisUtterance(text.replace(/<br>/g, " "));
         speech.lang = currentLang === "th" ? "th-TH" : "en-US";
 
-        // ตรวจสอบเสียงภาษาไทยบน Android
         const voices = window.speechSynthesis.getVoices();
         const hasThaiVoice = voices.some(v => v.lang === "th-TH");
 
         if (currentLang === "th" && !hasThaiVoice) {
             warning.style.display = "block";
-            return; // ไม่พยายามพูด
+            return;
         }
 
         window.speechSynthesis.cancel();
