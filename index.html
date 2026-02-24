@@ -164,6 +164,49 @@ color:#8b5e3c;
   background-color: #8b5e3c;
   transform: scale(1.05);
 }
+
+.image-slider{
+position:relative;
+}
+
+.image-slider button{
+position:absolute;
+top:50%;
+transform:translateY(-50%);
+background:rgba(0,0,0,0.5);
+color:white;
+border:none;
+border-radius:50%;
+width:30px;
+height:30px;
+cursor:pointer;
+}
+
+.prev{ left:1px; }
+.next{ right:1px; }
+
+#scrollTopBtn{
+position:fixed;
+bottom:30px;
+right:30px;
+display:none;
+background:#8b5e3c;
+color:white;
+border:none;
+width:45px;
+height:45px;
+border-radius:50%;
+font-size:20px;
+cursor:pointer;
+box-shadow:0 4px 10px rgba(0,0,0,0.2);
+transition:0.3s;
+z-index:999;
+}
+
+#scrollTopBtn:hover{
+background:#6f4e37;
+transform:scale(1.1);
+}
 </style>
 </head>
 
@@ -183,6 +226,8 @@ color:#8b5e3c;
 </select>
 </div>
 
+<div id="productCount" style="text-align:center; margin-top:10px; font-weight:600;"></div>
+
 <div class="menu-container" id="menu"></div>
 
 
@@ -195,106 +240,359 @@ let currentSpeechText="";
 const menuData=[
 
 {filter:"raw",img:"img/cacao_pod.jpg",
-th:{name:"ผลโกโก้สด",price:"8-10 บาท/กิโลกรัม",desc:"ผลสดจากสวนบนดอย"},
-en:{name:"Fresh Cacao Pod",price:"8-10 Baht/Kilogram",desc:"Fresh cacao pod from mountain farm."}},
-
-{filter:"raw",img:"img/cacao_beans_raw.jpg",
-th:{name:"เมล็ดคาเคา แบบดิบ",price:"100 บาท (100กรัม)",desc:"เมล็ดโกโก้จากสวนบนดอย"},
-en:{name:"Cacao Beans",price:"100 Baht (100 gram)",desc:"Raw cacao beans from mountain farm."}},
+th:{name:"ผลโกโก้สด",
+price:"50 บาท",desc:"ผลสดจากสวนบนดอย",
+how:"ผ่าเปลือกออก แล้วรับประทานเนื้อสีขาวรอบเมล็ด รสหวานอมเปรี้ยว สดชื่น (ไม่รับประทานเปลือกและเมล็ด)",
+benefit:"มีวิตามินซีสูง ช่วยเสริมภูมิคุ้มกัน ให้ความสดชื่น และมีสารต้านอนุมูลอิสระ"
+},
+en:{name:"Fresh Cacao Pod",price:"50 Baht",
+desc:"Fresh cacao pod from mountain farm.",
+how:"Open the pod and eat the white pulp around the beans. It tastes sweet and slightly sour. (Do not eat the shell or hard beans.)",
+benefit:"Open the pod and eat the white pulp around the beans. It tastes sweet and slightly sour. (Do not eat the shell or hard beans.)"
+}},
 
 {filter:"raw",img:"img/cacao_beans_roasted.jpg",
-th:{name:"เมล็ดคาเคา แบบคั่ว",price:"100 บาท (100กรัม)",desc:"เมล็ดโกโก้คั่วจากสวนบนดอย"},
-en:{name:"Cacao Beans",price:"100 Baht (100 gram)",desc:"Roasted cacao beans from mountain farm."}},
+th:{name:"เมล็ดคาเคา แบบคั่ว",
+price:"100 บาท (100กรัม)",
+desc:"เมล็ดคาเคาคั่วจากสวนบนดอย",
+how:"รับประทานได้ทันที เคี้ยวเพลิน หรือทานคู่เครื่องดื่ม และใช้โรยหน้าเบเกอรี่ได้",
+benefit:"อุดมด้วยสารต้านอนุมูลอิสระ ช่วยบำรุงหัวใจ กระตุ้นความสดชื่น และให้พลังงานจากธรรมชาติ"
+},
+en:{name:"Cacao Beans",
+price:"100 Baht (100 gram)",
+desc:"Roasted cacao beans from mountain farm.",
+how:"Ready to eat as a snack, enjoy with drinks, or use as a topping for desserts.",
+benefit:"Rich in antioxidants, supports heart health, boosts energy, and provides natural nutrients."
+}},
 
-{filter:"raw",img:"img/cacao_powder.jpg",
-th:{name:"ผงโกโก้",price:"? บาท",desc:""},
-en:{name:"Cacao Powder",price:"? Baht",desc:""}},
+{filter:"raw",img:["img/cacao_powder.jpg","img/cacao_powder2.jpg"],
+th:{name:"ผงโกโก้",
+price:"250 บาท",
+desc:"ผงโกโก้แท้จากเมล็ดคาเคาคั่วบดละเอียด",
+how:"ชงกับน้ำร้อนหรือนม ทำเครื่องดื่ม เบเกอรี่ หรือโรยหน้าอาหารได้",
+benefit:"มีสารต้านอนุมูลอิสระสูง ช่วยบำรุงหัวใจ เพิ่มพลังงาน และดีต่อระบบไหลเวียนเลือด"
+},
+en:{name:"Cacao Powder",
+price:"250 Baht",
+desc:"Pure finely ground cacao powder from roasted beans.",
+how:"Mix with hot water or milk, use in drinks, baking, or as a topping.",
+benefit:"High in antioxidants, supports heart health, boosts energy, and improves blood circulation."
+}},
 
-{filter:"raw",img:"img/cocoa_butter.jpg",
-th:{name:"เนยโกโก้",price:"? บาท",desc:""},
-en:{name:"Cocoa Butter",price:"? Baht",desc:""}},
+{filter:"raw",img:"img/cacao_butter.jpg",
+th:{name:"เนยคาเคา",
+price:"600 บาท",
+desc:"เนยคาเคาบริสุทธิ์ สกัดจากเมล็ดโกโก้คุณภาพ",
+how:"ใช้ทำช็อกโกแลต เบเกอรี่ หรือผสมในเครื่องดื่มและผลิตภัณฑ์บำรุงผิว",
+benefit:"มีไขมันดีจากธรรมชาติ ช่วยบำรุงหัวใจ ให้พลังงาน และช่วยให้ผิวนุ่มชุ่มชื้น"
+},
+en:{name:"Cocoa Butter",
+price:"600 Baht",
+desc:"Pure cocoa butter extracted from premium cacao beans.",
+how:"Use for making chocolate, baking, beverages, or skincare products.",
+benefit:"Contains natural healthy fats, supports heart health, provides energy, and helps moisturize the skin."
+}},
 
-{filter:"raw",img:"img/cacao_mass.jpg",
-th:{name:"โกโก้แมส",price:"300 บาท (250กรัม)",desc:""},
-en:{name:"Cacao Mass",price:"300 Baht (250 gram)",desc:""}},
+{filter:"raw",img:["img/cacao_butter_cube.jpg","img/cacao_butter_cube2.jpg"],
+th:{name:"เนยคาเคา (แบบก้อน)",
+price:"150 บาท",
+desc:"เนยคาเคาบริสุทธิ์แบบก้อน สะดวกต่อการใช้งานและแบ่งปริมาณ",
+how:"ใช้ทำช็อกโกแลต เบเกอรี่ ละลายผสมเครื่องดื่ม หรือใช้บำรุงผิวได้",
+benefit:"มีไขมันดีจากธรรมชาติ ให้พลังงาน บำรุงหัวใจ และช่วยเพิ่มความชุ่มชื้นให้ผิว"
+},
+en:{name:"Cocoa Butter (Cube)",
+price:"150 Baht",
+desc:"Pure cocoa butter in cube form, easy to portion and use.",
+how:"Perfect for chocolate making, baking, beverages, or skincare use.",
+benefit:"Rich in natural healthy fats, provides energy, supports heart health, and moisturizes the skin."
+}},
 
-{filter:"nibs",img:"img/cocoa_nibs.jpg",
-th:{name:"โกโก้นิบส์",price:"? บาท",desc:""},
-en:{name:"Cacao Nibs",price:"? Baht",desc:""}},
+{filter:"raw",img:"img/cacao_mass250.jpg",
+th:{name:"โกโก้แมส",
+price:"300 บาท (250กรัม)",
+desc:"โกโก้แมสแท้ 100% บดจากเมล็ดคาเคาคุณภาพ",
+how:"ใช้ทำช็อกโกแลต เบเกอรี่ หรือหลอมละลายผสมเครื่องดื่มได้",
+benefit:"อุดมด้วยสารต้านอนุมูลอิสระ มีไขมันธรรมชาติจากโกโก้ และให้พลังงานสูง"
+},
+en:{name:"Cacao Mass",
+price:"300 Baht (250 gram)",
+desc:"100% pure cacao mass made from premium cacao beans.",
+how:"100% pure cacao mass made from premium cacao beans.",
+benefit:"Perfect for chocolate making, baking, or melting into beverages."
+}},
+
+{filter:"raw",img:"img/cacao_mass500.jpg",
+th:{name:"โกโก้แมส",
+price:"600 บาท (500กรัม)",
+desc:"โกโก้แมสแท้ 100% บดจากเมล็ดคาเคาคุณภาพ ไม่เติมน้ำตาล",
+how:"ใช้ทำช็อกโกแลต เบเกอรี่ หรือหลอมละลายผสมเครื่องดื่มได้ตามต้องการ",
+benefit:"อุดมด้วยสารต้านอนุมูลอิสระ มีไขมันธรรมชาติจากโกโก้ และให้พลังงานสูง"
+},
+en:{name:"Cacao Mass",
+price:"300 Baht (500 gram)",
+desc:"100% pure cacao mass from premium cacao beans. No added sugar.",
+how:"Ideal for chocolate making, baking, or melting into beverages.",
+benefit:"Rich in antioxidants, contains natural cacao fats, and provides high energy."
+}},
+
+{filter:"nibs",img:["img/cacao_nibs.jpg","img/cacao_nibs2.jpg"],
+th:{name:"โกโก้นิบส์",
+price:"350 บาท",
+desc:"เมล็ดโกโก้คั่วบดหยาบ กลิ่นหอม รสเข้มธรรมชาติ",
+how:"รับประทานเป็นของว่าง โรยหน้าซีเรียล โยเกิร์ต สมูทตี้ หรือเบเกอรี่",
+benefit:"อุดมด้วยสารต้านอนุมูลอิสระ ไฟเบอร์สูง ช่วยบำรุงหัวใจและให้พลังงาน"
+},
+en:{
+name:"Cacao Nibs",
+price:"350 Baht",
+desc:"Crushed roasted cacao beans with rich natural flavor.",
+how:"Enjoy as a snack or sprinkle over cereal, yogurt, smoothies, or desserts.",
+benefit:"Rich in antioxidants and fiber, supports heart health and boosts energy."
+}},
 
 {filter:"drink",img:"img/cocoa_water.jpg",
-th:{name:"น้ำโกโก้สด",price:"80 บาท",desc:"เครื่องดื่มจากเยื่อโกโก้",how:"แช่เย็นก่อนดื่ม เขย่าก่อนเปิด",
-benefit:"สดชื่น มีวิตามินธรรมชาติ"},
-en:{name:"Fresh Cocoa Drink",price:"80 Baht",desc:"Refreshing cacao pulp drink.",how:"Shake well and serve chilled",
-benefit:"Naturally refreshing and rich in vitamins"}},
+th:{name:"น้ำโกโก้สด",
+price:"80 บาท",
+desc:"เครื่องดื่มจากเยื่อโกโก้",
+how:"แช่เย็นก่อนดื่ม เขย่าก่อนเปิด",
+benefit:"สดชื่น มีวิตามินธรรมชาติ"
+},
+en:{name:"Fresh Cocoa Drink",
+price:"80 Baht",
+desc:"Refreshing cacao pulp drink.",
+how:"Shake well and serve chilled",
+benefit:"Naturally refreshing and rich in vitamins"
+}},
 
 {filter:"alcohol",img:"img/cocoa_wine.jpg",
-th:{name:"Cocoa Cider Wine",price:"250 บาท",desc:"ไวน์หมักจากเยื่อโกโก้"},
-en:{name:"Cocoa Cider Wine",price:"250 Baht",desc:"Fermented cacao pulp wine."}},
+th:{name:"Cocoa Cider Wine",
+price:"250 บาท",
+desc:"ไวน์หมักจากเยื่อโกโก้ รสหวานอมเปรี้ยว หอมกลิ่นผลไม้ธรรมชาติ",
+how:"แช่เย็นก่อนดื่ม เสิร์ฟคู่ชีสหรือของว่าง เพื่อรสชาติที่ลงตัว",
+benefit:"มีสารต้านอนุมูลอิสระจากโกโก้ ช่วยผ่อนคลาย และเพิ่มความสดชื่น"
+},
+en:{
+name:"Cocoa Cider Wine",
+price:"250 Baht",
+desc:"Fermented cacao pulp wine with a sweet and slightly tangy fruity aroma.",
+how:"Serve chilled and pair with cheese or light snacks.",
+benefit:"Contains natural antioxidants from cacao, promotes relaxation and refreshment."
+}},
 
 {filter:"alcohol",img:"img/cocoa_whiskey.jpg",
-th:{name:"Cocoa Whiskey",price:"250 บาท",desc:""},
-en:{name:"Cocoa Whiskey",price:"250 Baht",desc:""}},
+th:{name:"Cocoa Whiskey",
+price:"250 บาท",
+desc:"วิสกี้หมักผสมกลิ่นโกโก้ ให้รสเข้มนุ่มและกลิ่นหอมเฉพาะตัว",
+how:"เสิร์ฟแบบเพียว ใส่น้ำแข็ง หรือผสมค็อกเทลตามต้องการ",
+benefit:"ให้ความผ่อนคลาย พร้อมกลิ่นหอมโกโก้ที่เป็นเอกลักษณ์"
+},
+en:{
+name:"Cocoa Whiskey",
+price:"250 Baht",
+desc:"Whiskey infused with cacao aroma, offering a smooth and rich flavor.",
+how:"Enjoy neat, on the rocks, or in your favorite cocktail.",
+benefit:"Provides relaxation with a distinctive cacao aroma."
+}},
 
 {filter:"dark",img:"img/dark100.jpg",
-th:{name:"ดาร์กช็อกโกแลต 100%",price:"120 บาท",desc:""},
-en:{name:"Dark Chocolate 100%",price:"120 Baht",desc:""}},
+th:{name:"ดาร์กช็อกโกแลต 100%",
+price:"120 บาท",
+desc:"ช็อกโกแลตเข้มข้นจากโกโก้แท้ 100% ไม่เติมน้ำตาล",
+how:"รับประทานเป็นของว่าง ทานคู่กาแฟ หรือใช้ประกอบเมนูสุขภาพ",
+benefit:"อุดมด้วยสารต้านอนุมูลอิสระ ช่วยบำรุงหัวใจ และดีต่ออารมณ์"
+},
+en:{
+name:"Dark Chocolate 100%",
+price:"120 Baht",
+desc:"Intense chocolate made from 100% pure cacao with no added sugar.",
+how:"Enjoy as a snack, pair with coffee, or use in healthy recipes.",
+benefit:"Rich in antioxidants, supports heart health, and enhances mood."
+}},
 
 {filter:"dark",img:"img/dark90.jpg",
-th:{name:"ดาร์กช็อกโกแลต 90% <br>รสโมคค่า</br>",price:"120 บาท",desc:""},
-en:{name:"Dark Chocolate 90% Mocha Flavor",price:"120 Baht",desc:""}},
+th:{name:"ดาร์กช็อกโกแลต 90% <br>รสโมคค่า</br>",
+price:"120 บาท",
+desc:"ดาร์กช็อกโกแลตเข้มข้น 90% ผสานกลิ่นหอมกาแฟโมคค่า",
+how:"รับประทานเป็นของว่าง หรือทานคู่กาแฟเพื่อเพิ่มความเข้มข้น",
+benefit:"มีสารต้านอนุมูลอิสระสูง ช่วยกระตุ้นความสดชื่นและบำรุงหัวใจ"
+},
+en:{
+name:"Dark Chocolate 90% Mocha Flavor",
+price:"120 Baht",
+desc:"Rich 90% dark chocolate blended with aromatic mocha flavor.",
+how:"Enjoy as a snack or pair with coffee for a deeper taste.",
+benefit:"High in antioxidants, boosts freshness and supports heart health."
+}},
 
 {filter:"dark",img:"img/dark80.jpg",
-th:{name:"ดาร์กช็อกโกแลต 80%",price:"120 บาท",desc:""},
-en:{name:"Dark Chocolate 80%",price:"120 Baht",desc:""}},
+th:{name:"ดาร์กช็อกโกแลต 80%",
+price:"120 บาท",
+desc:"ดาร์กช็อกโกแลตเข้มข้น รสกลมกล่อม ทานง่าย",
+how:"เหมาะสำหรับทานเล่น หรือใช้ประกอบเมนูขนมหวาน",
+benefit:"ช่วยบำรุงหัวใจ เสริมอารมณ์ และให้พลังงาน"
+},
+en:{
+name:"Dark Chocolate 80%",
+price:"120 Baht",
+desc:"Smooth and rich 80% dark chocolate, easy to enjoy.",
+how:"Perfect as a snack or for dessert recipes.",
+benefit:"Supports heart health, enhances mood, and provides energy."
+}},
 
 {filter:"dark",img:"img/dark_str80.jpg",
-th:{name:"ดาร์กช็อกโกแลต 80% <br>รสสตรอเบอรี่</br>",price:"120 บาท",desc:""},
-en:{name:"Dark Chocolate 80% Strawberry Flavor",price:"120 Baht",desc:""}},
+th:{name:"ดาร์กช็อกโกแลต 80% <br>รสสตรอเบอรี่</br>",
+price:"120 บาท",
+desc:"ดาร์กช็อกโกแลต 80% ผสานรสเปรี้ยวหวานจากสตรอเบอรี่",
+how:"รับประทานเป็นของว่าง เพิ่มความสดชื่นในทุกคำ",
+benefit:"อุดมด้วยสารต้านอนุมูลอิสระ และช่วยกระตุ้นความสดใส"
+},
+en:{
+name:"Dark Chocolate 80% Strawberry Flavor",
+price:"120 Baht",
+desc:"80% dark chocolate infused with sweet and tangy strawberry flavor.",
+how:"Enjoy as a refreshing snack anytime.",
+benefit:"Rich in antioxidants and helps boost vitality."
+}},
 
 {filter:"dark",img:"img/dark_alm80.jpg",
-th:{name:"ดาร์กช็อกโกแลต 80% <br>รสอัลมอนด์</br>",price:"120 บาท",desc:""},
-en:{name:"Dark Chocolate 80% Almond Flavor",price:"120 Baht",desc:""}},
+th:{name:"ดาร์กช็อกโกแลต 80% <br>รสอัลมอนด์</br>",
+price:"120 บาท",
+desc:"ดาร์กช็อกโกแลต 80% ผสานความกรุบกรอบของอัลมอนด์",
+how:"เหมาะสำหรับทานเล่น หรือทานคู่เครื่องดื่มร้อน",
+benefit:"ให้พลังงานสูง มีไขมันดีจากอัลมอนด์ และสารต้านอนุมูลอิสระ"
+},
+en:{
+name:"Dark Chocolate 80% Almond Flavor",
+price:"120 Baht",
+desc:"80% dark chocolate combined with crunchy almonds.",
+how:"Great as a snack or paired with hot beverages.",
+benefit:"High in energy, contains healthy fats from almonds, and rich in antioxidants."
+}},
 
-{filter:"dark",img:"img/dark_.jpg",
+/*{filter:"dark",img:"img/dark_.jpg",
 th:{name:"ดาร์กช็อกโกแลต 70% <br>เชียงใหม่ ออริจิน</br>",price:"120 บาท",desc:""},
-en:{name:"Dark Chocolate 70% Chiang Mai Origin",price:"120 Baht",desc:""}},
+en:{name:"Dark Chocolate 70% Chiang Mai Origin",price:"120 Baht",desc:""}},*/
 
 {filter:"dark",img:"img/dark_gin70.jpg",
-th:{name:"ดาร์กช็อกโกแลต 70% <br>รสขิง</br>",price:"120 บาท",desc:""},
-en:{name:"Dark Chocolate 70% Ginger Flavor",price:"120 Baht",desc:""}},
+th:{name:"ดาร์กช็อกโกแลต 70% <br>รสขิง</br>",
+price:"120 บาท",
+desc:"ดาร์กช็อกโกแลต 70% ผสานความเผ็ดอุ่นจากขิงธรรมชาติ",
+how:"รับประทานเป็นของว่าง หรือทานคู่ชาร้อนเพื่อเพิ่มความอบอุ่น",
+benefit:"ช่วยกระตุ้นการไหลเวียนโลหิต เสริมภูมิคุ้มกัน และอุดมด้วยสารต้านอนุมูลอิสระ"
+},
+en:{
+name:"Dark Chocolate 70% Ginger Flavor",
+price:"120 Baht",
+desc:"70% dark chocolate blended with warm natural ginger.",
+how:"Enjoy as a snack or pair with hot tea for extra warmth.",
+benefit:"Supports circulation, boosts immunity, and rich in antioxidants."
+}},
 
-{filter:"dark",img:"img/dark_.jpg",
-th:{name:"ดาร์กช็อกโกแลต 70% <br>รสน้ำตาลดอกมะพร้าว</br>",price:"120 บาท",desc:""},
-en:{name:"Dark Chocolate 70% Coconut Blossom Sugar Flavor",price:"120 Baht",desc:""}},
+{filter:"dark",img:"img/dark_coc70.jpg",
+th:{name:"ดาร์กช็อกโกแลต 70% <br>รสน้ำตาลดอกมะพร้าว</br>",
+price:"120 บาท",
+desc:"ดาร์กช็อกโกแลต 70% หอมหวานจากน้ำตาลดอกมะพร้าวธรรมชาติ",
+how:"เหมาะสำหรับทานเล่น หรือทานคู่กาแฟดำ",
+benefit:"ให้พลังงานจากน้ำตาลธรรมชาติ พร้อมสารต้านอนุมูลอิสระจากโกโก้"
+},
+en:{
+name:"Dark Chocolate 70% Coconut Blossom Sugar Flavor",
+price:"120 Baht",
+desc:"70% dark chocolate sweetened with natural coconut blossom sugar.",
+how:"Perfect as a snack or paired with black coffee.",
+benefit:"Provides natural energy and rich antioxidants from cacao."
+}},
 
-{filter:"dark",img:"img/dark_.jpg",
+{filter:"dark",img:"img/dark_van60.jpg",
+th:{name:"ดาร์กช็อกโกแลต 70% <br>รสวานิลลา</br>",
+price:"120 บาท",
+desc:"ดาร์กช็อกโกแลต 70% ผสานกลิ่นหอมละมุนของวานิลลา",
+how:"รับประทานเป็นของว่าง หรือใช้เพิ่มความหอมในเมนูของหวาน",
+benefit:"ช่วยผ่อนคลาย เสริมอารมณ์ และอุดมด้วยสารต้านอนุมูลอิสระ"
+},
+en:{
+name:"Dark Chocolate 70% Vanilla Flavor",
+price:"120 Baht",
+desc:"70% dark chocolate infused with smooth vanilla aroma.",
+how:"Enjoy as a snack or enhance desserts with its fragrance.",
+benefit:"Promotes relaxation, enhances mood, and rich in antioxidants."
+}},
+
+/*{filter:"dark",img:"img/dark_.jpg",
 th:{name:"ดาร์กช็อกโกแลต 60% <br>รสนม</br>",price:"120 บาท",desc:""},
-en:{name:"Dark Chocolate 60% Milk Flavor",price:"120 Baht",desc:""}},
+en:{name:"Dark Chocolate 60% Milk Flavor",price:"120 Baht",desc:""}},*/
 
-{filter:"white",img:"img/white_.jpg",
-th:{name:"ไวท์ช็อกโกแลต 34% <br>รสสตรอเบอรี่</br>",price:"120 บาท",desc:""},
-en:{name:"White Chocolate 34% Strawberry Flavor",price:"120 Baht",desc:""}},
+{filter:"white",img:"img/white_str34.jpg",
+th:{name:"ไวท์ช็อกโกแลต 34% <br>รสสตรอเบอรี่</br>",
+price:"120 บาท",
+desc:"ไวท์ช็อกโกแลตเนื้อนุ่ม หอมหวาน ผสานรสสตรอเบอรี่สดชื่น",
+how:"รับประทานเป็นของว่าง หรือมอบเป็นของฝากน่ารัก",
+benefit:"ช่วยเพิ่มพลังงานและสร้างความสดใสในทุกคำ"
+},
+en:{
+name:"White Chocolate 34% Strawberry Flavor",
+price:"120 Baht",
+desc:"Smooth white chocolate blended with refreshing strawberry flavor.",
+how:"Enjoy as a sweet snack or a lovely gift.",
+benefit:"Provides energy and a delightful sweet experience."
+}},
 
-{filter:"white",img:"img/white_.jpg",
+/*{filter:"white",img:"img/white_.jpg",
 th:{name:"ไวท์ช็อกโกแลต 34% <br>นมอัลมอนด์</br>",price:"120 บาท",desc:""},
-en:{name:"White Chocolate 34% Milk Almond Flavor",price:"120 Baht",desc:""}},
+en:{name:"White Chocolate 34% Milk Almond Flavor",price:"120 Baht",desc:""}},*/
 
 {filter:"white",img:"img/white_mpe34.jpg",
-th:{name:"ไวท์ช็อกโกแลต 34% <br>รสนมพีช</br>",price:"120 บาท",desc:""},
-en:{name:"White Chocolate 34% Milk Peach Flavor",price:"120 Baht",desc:""}},
+th:{name:"ไวท์ช็อกโกแลต 34% <br>รสนมพีช</br>",
+price:"120 บาท",
+desc:"ไวท์ช็อกโกแลตเนื้อเนียน หอมหวานกลิ่นพีชละมุน",
+how:"เหมาะสำหรับทานเล่น หรือทานคู่เครื่องดื่มเย็น",
+benefit:"ให้พลังงาน และช่วยเพิ่มความสดชื่น"
+},
+en:{
+name:"White Chocolate 34% Milk Peach Flavor",
+price:"120 Baht",
+desc:"Creamy white chocolate infused with soft peach aroma.",
+how:"Perfect as a snack or paired with cold beverages.",
+benefit:"Provides energy and a refreshing sweetness."
+}},
 
-{filter:"white",img:"img/white_.jpg",
+/*{filter:"white",img:"img/white_.jpg",
 th:{name:"ไวท์ช็อกโกแลต 34% <br>รสนม</br>",price:"120 บาท",desc:""},
-en:{name:"White Chocolate 34% Milk Flavor",price:"120 Baht",desc:""}},
+en:{name:"White Chocolate 34% Milk Flavor",price:"120 Baht",desc:""}},*/
 
 {filter:"honey",img:"img/cocoa_honey.jpg",
+th:{name:"น้ำผึ้งป่าโกโก้",
+price:"250 บาท",
+desc:"น้ำผึ้งธรรมชาติจากสวนโกโก้ กลิ่นหอมเฉพาะตัว",
+how:"ผสมน้ำอุ่น ชา หรือใช้เป็นส่วนผสมในขนมและเครื่องดื่ม",
+benefit:"ช่วยบำรุงร่างกาย เสริมภูมิคุ้มกัน และให้พลังงานจากธรรมชาติ"
+},
+en:{
+name:"Cocoa Garden Honey",
+price:"250 Baht",
+desc:"Natural honey harvested from cacao garden blossoms.",
+how:"Mix with warm water or tea, or use in desserts and drinks.",
+benefit:"Supports immunity and provides natural energy."
+}},
+
+/*{filter:"honey",img:"img/cocoa_honey5.jpg",
 th:{name:"น้ำผึ้งป่าโกโก้",price:"250 บาท",desc:""},
-en:{name:"Honey Cocoa Garden",price:"250 Baht",desc:""}}
+en:{name:"Honey Cocoa Garden",price:"250 Baht",desc:""}}*/
 
 
 
 ];
+function updateUIText(){
+  const faqBtn = document.getElementById("faqBtn");
+
+  if(currentLang === "th"){
+    faqBtn.innerHTML = "💬 คำถามยอดฮิต";
+    document.getElementById("tagline").innerText = "โกโก้แท้จากคนดอย";
+  }else{
+    faqBtn.innerHTML = "💬 Popular Questions";
+    document.getElementById("tagline").innerText = "Authentic Cocoa from the Mountains";
+  }
+}
 
 function renderDropdown(){
 const select=document.getElementById("productSelect");
@@ -342,17 +640,48 @@ function renderMenu(){
 const menu=document.getElementById("menu");
 menu.innerHTML="";
 
-menuData
-.filter(item=>currentFilter==="all"||item.filter===currentFilter)
-.forEach(item=>{
+const filteredItems = menuData.filter(item =>
+currentFilter==="all" || item.filter===currentFilter
+);
+
+// ⭐ แสดงจำนวนสินค้า
+document.getElementById("productCount").innerHTML =
+currentLang==="th"
+? `📦 มีสินค้าทั้งหมด ${filteredItems.length} รายการ`
+: `📦 Total ${filteredItems.length} products`;
+
+filteredItems.forEach(item=>{
 const data=item[currentLang];
 menu.innerHTML+=`
 <div class="menu-item" onclick="showDetail('${data.name}','${data.price}','${data.desc}')">
-<img src="${item.img}">
+<div class="image-slider">
+  <button class="prev" onclick="changeImage(event,-1)">❮</button>
+  <img src="${Array.isArray(item.img)?item.img[0]:item.img}" data-images='${JSON.stringify(item.img)}' data-index="0">
+  <button class="next" onclick="changeImage(event,1)">❯</button>
+</div>
 <h3>${data.name}</h3>
 <p class="price">${data.price}</p>
 </div>`;
 });
+}
+
+function changeImage(event,direction){
+event.stopPropagation();
+
+const container = event.target.parentElement;
+const img = container.querySelector("img");
+
+let images = JSON.parse(img.dataset.images);
+if(!Array.isArray(images)) return;
+
+let index = parseInt(img.dataset.index);
+index += direction;
+
+if(index < 0) index = images.length-1;
+if(index >= images.length) index = 0;
+
+img.src = images[index];
+img.dataset.index = index;
 }
 
 function setFilter(value){
@@ -388,10 +717,10 @@ document.getElementById("detail").innerHTML=
 
 <hr style="margin:15px 0;">
 
-<h3>${currentLang==="th"?"วิธีรับประทาน":"How to Enjoy"}</h3>
+<h3>${currentLang==="th"?"วิธีรับประทาน : ":"How to Enjoy : "}</h3>
 <p>${data.how || "-"}</p>
 
-<h3>${currentLang==="th"?"ประโยชน์":"Benefits"}</h3>
+<h3>${currentLang==="th"?"ประโยชน์ : ":"Benefits : "}</h3>
 <p>${data.benefit || "-"}</p>
 
 <button class="speak-btn" onclick="speak()">
@@ -425,14 +754,35 @@ document.querySelectorAll(".top-bar button")
 
 event.target.classList.add("active");
 
-renderDropdown();
-renderMenu();
+
 }
 
-renderDropdown();
-renderMenu();
 
 
+// แสดงปุ่มเมื่อเลื่อนลง
+window.onscroll = function(){
+const btn = document.getElementById("scrollTopBtn");
+
+if(document.documentElement.scrollTop > 200){
+btn.style.display = "block";
+}else{
+btn.style.display = "none";
+}
+};
+
+// กดแล้วเลื่อนขึ้นบนแบบนุ่ม ๆ
+function scrollToTop(){
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+}
+
+document.addEventListener("DOMContentLoaded", function() {
+  renderDropdown();
+  renderMenu();
+  updateUIText();
+});
 </script>
 
 <div class="modal" id="productModal">
@@ -442,11 +792,10 @@ renderMenu();
 </div>
 
 <div class="ask-section">
-  <a href="ask.html" class="ask-btn">💬 คำถามยอดฮิต
-</a>
+  <a href="ask.html" class="ask-btn" id="faqBtn"></a>
 </div>
 
-<script src="script.js"></script>
+<button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
 
 </body>
 </html>

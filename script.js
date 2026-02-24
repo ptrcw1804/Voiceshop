@@ -10,10 +10,10 @@ const data = {
             contact: "ช่องทางติดต่อ"
         },
         answers: {
-            price: "ราคาสินค้าเริ่มต้นที่ 30 บาท",
+            price: "ราคาสินค้าเริ่มต้นที่ 50 บาท",
             time: "ร้านเปิดทุกวัน เวลา 08.00 ถึง 18.00 น.",
             order: "สามารถสั่งซื้อได้ที่หน้าร้านหรือช่องทางออนไลน์",
-            contact: "ติดต่อได้ที่เพจเฟสบุ๊ค หรือโทร 064-234-5678"
+            contact: "ติดต่อได้ที่เพจเฟสบุ๊ค Hill Tribe Cocoa Cof หรือโทร 099-295-110"
         }
     },
     en: {
@@ -25,10 +25,10 @@ const data = {
             contact: "Contact"
         },
         answers: {
-            price: "Prices start at 30 baht.",
+            price: "Prices start at 50 baht.",
             time: "The shop is open daily from 8 AM to 6 PM.",
             order: "Orders can be placed in-store or online.",
-            contact: "Contact us via Facebook or call 064-234-5678."
+            contact: "Contact us via Facebook Hill Tribe Cocoa Cof or call 099-295-110."
         }
     }
 };
