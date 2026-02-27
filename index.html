@@ -3,8 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hill Tribe Cocoa Cof</title>
+<title>Hill Tribe Cocoa Cof (Cocoadoi)</title>
 <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 
 <style>
@@ -207,6 +208,53 @@ z-index:999;
 background:#6f4e37;
 transform:scale(1.1);
 }
+
+.footer {
+  background-color: #6f4e37;
+  color: white;
+  text-align: center;
+  padding: 40px 20px;
+  margin-top: 60px;
+}
+
+.footer h3 {
+  margin-bottom: 25px;
+}
+
+.contact-row {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.contact-row a,
+.contact-row span {
+  color: white;
+  text-decoration: none;
+  padding: 0 15px;
+  position: relative;
+  font-size: 14px;
+}
+
+.contact-row a:not(:last-child)::after,
+.contact-row span:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 20%;
+  height: 60%;
+  width: 1px;
+  background-color: rgba(255,255,255,0.4);
+}
+
+.contact-row i {
+  margin-right: 6px;
+  color: #f5c16c;
+}
+
+.contact-row a:hover {
+  color: #f5c16c;
+}
 </style>
 </head>
 
@@ -214,8 +262,8 @@ transform:scale(1.1);
 
 <header>
 <img src="img/cocoa_doi_logo.jpg" class="logo">
-<h1>Hill Tribe Cocoa Cof</h1>
-<p id="tagline">โกโก้แท้จากคนดอย</p>
+<h1>Hill Tribe Cocoa Cof <br>(Cocoadoi)</br></h1>
+<p id="tagline">ALL ABOUT CACAO ,ALL ABOUT LOVE</p>
 </header>
 
 <div class="top-bar">
@@ -242,12 +290,12 @@ const menuData=[
 {filter:"raw",img:"img/cacao_pod.jpg",
 th:{name:"ผลโกโก้สด",
 price:"50 บาท",desc:"ผลสดจากสวนบนดอย",
-how:"ผ่าเปลือกออก แล้วรับประทานเนื้อสีขาวรอบเมล็ด รสหวานอมเปรี้ยว สดชื่น (ไม่รับประทานเปลือกและเมล็ด)",
+how:"ผ่าเปลือกออก แล้วรับประทานเนื้อสีขาวรอบเมล็ด รสหวานอมเปรี้ยว สดชื่น",
 benefit:"มีวิตามินซีสูง ช่วยเสริมภูมิคุ้มกัน ให้ความสดชื่น และมีสารต้านอนุมูลอิสระ"
 },
 en:{name:"Fresh Cacao Pod",price:"50 Baht",
 desc:"Fresh cacao pod from mountain farm.",
-how:"Open the pod and eat the white pulp around the beans. It tastes sweet and slightly sour. (Do not eat the shell or hard beans.)",
+how:"Open the pod and eat the white pulp around the beans. It tastes sweet and slightly sour.",
 benefit:"Open the pod and eat the white pulp around the beans. It tastes sweet and slightly sour. (Do not eat the shell or hard beans.)"
 }},
 
@@ -266,7 +314,7 @@ benefit:"Rich in antioxidants, supports heart health, boosts energy, and provide
 }},
 
 {filter:"raw",img:["img/cacao_powder.jpg","img/cacao_powder2.jpg"],
-th:{name:"ผงโกโก้",
+th:{name:"ผงคาเคา",
 price:"250 บาท",
 desc:"ผงโกโก้แท้จากเมล็ดคาเคาคั่วบดละเอียด",
 how:"ชงกับน้ำร้อนหรือนม ทำเครื่องดื่ม เบเกอรี่ หรือโรยหน้าอาหารได้",
@@ -286,9 +334,9 @@ desc:"เนยคาเคาบริสุทธิ์ สกัดจาก�
 how:"ใช้ทำช็อกโกแลต เบเกอรี่ หรือผสมในเครื่องดื่มและผลิตภัณฑ์บำรุงผิว",
 benefit:"มีไขมันดีจากธรรมชาติ ช่วยบำรุงหัวใจ ให้พลังงาน และช่วยให้ผิวนุ่มชุ่มชื้น"
 },
-en:{name:"Cocoa Butter",
+en:{name:"Cacao Butter",
 price:"600 Baht",
-desc:"Pure cocoa butter extracted from premium cacao beans.",
+desc:"Pure cacao butter extracted from premium cacao beans.",
 how:"Use for making chocolate, baking, beverages, or skincare products.",
 benefit:"Contains natural healthy fats, supports heart health, provides energy, and helps moisturize the skin."
 }},
@@ -300,17 +348,17 @@ desc:"เนยคาเคาบริสุทธิ์แบบก้อน �
 how:"ใช้ทำช็อกโกแลต เบเกอรี่ ละลายผสมเครื่องดื่ม หรือใช้บำรุงผิวได้",
 benefit:"มีไขมันดีจากธรรมชาติ ให้พลังงาน บำรุงหัวใจ และช่วยเพิ่มความชุ่มชื้นให้ผิว"
 },
-en:{name:"Cocoa Butter (Cube)",
+en:{name:"Cacao Butter (Cube)",
 price:"150 Baht",
-desc:"Pure cocoa butter in cube form, easy to portion and use.",
+desc:"Pure cacao butter in cube form, easy to portion and use.",
 how:"Perfect for chocolate making, baking, beverages, or skincare use.",
 benefit:"Rich in natural healthy fats, provides energy, supports heart health, and moisturizes the skin."
 }},
 
 {filter:"raw",img:"img/cacao_mass250.jpg",
-th:{name:"โกโก้แมส",
+th:{name:"คาเคาแมส",
 price:"300 บาท (250กรัม)",
-desc:"โกโก้แมสแท้ 100% บดจากเมล็ดคาเคาคุณภาพ",
+desc:"คาเคาแมสแท้ 100% บดจากเมล็ดคาเคาคุณภาพ",
 how:"ใช้ทำช็อกโกแลต เบเกอรี่ หรือหลอมละลายผสมเครื่องดื่มได้",
 benefit:"อุดมด้วยสารต้านอนุมูลอิสระ มีไขมันธรรมชาติจากโกโก้ และให้พลังงานสูง"
 },
@@ -322,13 +370,13 @@ benefit:"Perfect for chocolate making, baking, or melting into beverages."
 }},
 
 {filter:"raw",img:"img/cacao_mass500.jpg",
-th:{name:"โกโก้แมส",
+th:{name:"ดาร์กช็อกโกแลต 100% <br>(คาเคาแมส)</br>",
 price:"600 บาท (500กรัม)",
 desc:"โกโก้แมสแท้ 100% บดจากเมล็ดคาเคาคุณภาพ ไม่เติมน้ำตาล",
 how:"ใช้ทำช็อกโกแลต เบเกอรี่ หรือหลอมละลายผสมเครื่องดื่มได้ตามต้องการ",
 benefit:"อุดมด้วยสารต้านอนุมูลอิสระ มีไขมันธรรมชาติจากโกโก้ และให้พลังงานสูง"
 },
-en:{name:"Cacao Mass",
+en:{name:"Dark Chocolate 100% (Cacao Mass)",
 price:"300 Baht (500 gram)",
 desc:"100% pure cacao mass from premium cacao beans. No added sugar.",
 how:"Ideal for chocolate making, baking, or melting into beverages.",
@@ -336,7 +384,7 @@ benefit:"Rich in antioxidants, contains natural cacao fats, and provides high en
 }},
 
 {filter:"nibs",img:["img/cacao_nibs.jpg","img/cacao_nibs2.jpg"],
-th:{name:"โกโก้นิบส์",
+th:{name:"คาเคานิบส์",
 price:"350 บาท",
 desc:"เมล็ดโกโก้คั่วบดหยาบ กลิ่นหอม รสเข้มธรรมชาติ",
 how:"รับประทานเป็นของว่าง โรยหน้าซีเรียล โยเกิร์ต สมูทตี้ หรือเบเกอรี่",
@@ -364,7 +412,7 @@ how:"Shake well and serve chilled",
 benefit:"Naturally refreshing and rich in vitamins"
 }},
 
-{filter:"alcohol",img:"img/cocoa_wine.jpg",
+/*{filter:"alcohol",img:"img/cocoa_wine.jpg",
 th:{name:"Cocoa Cider Wine",
 price:"250 บาท",
 desc:"ไวน์หมักจากเยื่อโกโก้ รสหวานอมเปรี้ยว หอมกลิ่นผลไม้ธรรมชาติ",
@@ -392,7 +440,7 @@ price:"250 Baht",
 desc:"Whiskey infused with cacao aroma, offering a smooth and rich flavor.",
 how:"Enjoy neat, on the rocks, or in your favorite cocktail.",
 benefit:"Provides relaxation with a distinctive cacao aroma."
-}},
+}},*/
 
 {filter:"dark",img:"img/dark100.jpg",
 th:{name:"ดาร์กช็อกโกแลต 100%",
@@ -587,10 +635,10 @@ function updateUIText(){
 
   if(currentLang === "th"){
     faqBtn.innerHTML = "💬 คำถามยอดฮิต";
-    document.getElementById("tagline").innerText = "โกโก้แท้จากคนดอย";
+    document.getElementById("tagline").innerText = "ALL ABOUT CACAO, ALL ABOUT LOVE";
   }else{
     faqBtn.innerHTML = "💬 Popular Questions";
-    document.getElementById("tagline").innerText = "Authentic Cocoa from the Mountains";
+    document.getElementById("tagline").innerText = "ALL ABOUT CACAO, ALL ABOUT LOVE";
   }
 }
 
@@ -606,7 +654,7 @@ select.innerHTML=`
 </optgroup>
 <optgroup label="ผลิตภัณฑ์แปรรูป">
 <option value="drink">เครื่องดื่ม</option>
-<option value="alcohol">แอลกอฮอล์</option>
+
 <option value="honey">น้ำผึ้ง</option>
 </optgroup>
 <optgroup label="ช็อกโกแลต">
@@ -623,7 +671,7 @@ select.innerHTML=`
 </optgroup>
 <optgroup label="Processed Products">
 <option value="drink">Drinks</option>
-<option value="alcohol">Alcohol</option>
+
 <option value="honey">Honey</option>
 </optgroup>
 <optgroup label="Chocolate">
@@ -632,7 +680,8 @@ select.innerHTML=`
 </optgroup>
 `;
 }
-
+//<option value="alcohol">แอลกอฮอล์</option>
+//<option value="alcohol">Alcohol</option>
 select.value=currentFilter;
 }
 
@@ -781,7 +830,7 @@ behavior:"smooth"
 });
 }
 
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function(){
   renderDropdown();
   renderMenu();
   updateUIText();
@@ -800,5 +849,21 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <button id="scrollTopBtn" onclick="scrollToTop()">↑</button>
 
+<footer class="footer">
+  <div class="footer-content">
+    <h3>Contact Us</h3>
+
+    <div class="contact-row">
+      <a href="tel:0992951100"><i class="fa-solid fa-phone"></i> 099-295-1100</a>
+      <a href="mailto:cocoadoi01@gmail.com"><i class="fa-solid fa-envelope"></i> cocoadoi01@gmail.com</a>
+      <a href="https://www.facebook.com/HillTribeCocoaCof?locale=th_TH"><i class="fa-brands fa-facebook"></i> Hill Tribe Cocoa Cof โกโก้ดอย</a>
+      <a href="https://line.me/ti/p/~cocoadoi" target="_blank"><i class="fa-brands fa-line"></i> cocoadoi</a>
+      <a href="https://www.tiktok.com/@cocoadoi11?is_from_webapp=1&sender_device=pc"><i class="fa-brands fa-tiktok"></i> cocoadoi11</a>
+      <a href="https://maps.app.goo.gl/LEjZAguECr3LdUUE9" target="_blank"><i class="fa-solid fa-location-dot"></i> 234/18 ต.เชิงดอย อ.ดอยสะเก็ด จ.เชียงใหม่ 50220</a>
+    </div>
+
+  </div>
+</footer>
+
 </body>
-</html>
+</html>     
